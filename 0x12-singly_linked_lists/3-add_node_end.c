@@ -1,39 +1,68 @@
+#include <string.h>
+#include <stdio.h>
 #include "lists.h"
+#include "strlen.c"
+
+list_t *createNewNode(const char *str);
+
 /**
-* add_node_end - function that adds a new node
-* at the end of a list_t list
-* @head: Parameter that point to de head of the linked list
-* @str: Parameter with the string
-* Return: the address of the new element, or NULL if it failed
+* add_node_end - dds a new node at the end of a list_t list
+* @head: douple pointer to the head of the linked list
+* @str: pointer to string to be assigned to the added node's str property
+* Return: pointer to the new node (SUCCESS) OR
+* NULL, if there is insufficent memory available (FAILURE)
 */
 
 list_t *add_node_end(list_t **head, const char *str)
 {
-	list_t *new, *temp;
+	list_t *current_node = *head;
 
-	new = malloc(sizeof(list_t));
-	if (new == NULL)
+	if (current_node)
 	{
+		while (current_node)
+		{
+			if (current_node->next)
+			{
+				current_node = current_node->next;
+			}
+			else
+			{
+				current_node->next = createNewNode(str);
+				return (current_node->next);
+			}
+		}
+	}
+	else
+	{
+		*head = createNewNode(str);
+	}
+
+	return (*head);
+}
+
+/**
+* createNewNode - create a new list_t list node
+* @str: pointer to string to be assigned to the created node's str property
+* Return: pointer to the new node (SUCCESS) OR
+* NULL, if there is insufficent memory available (FAILURE)
+*/
+
+list_t *createNewNode(const char *str)
+{
+	list_t *new_node_ptr = malloc(sizeof(list_t));
+
+	if (!new_node_ptr)
+		return (NULL);
+
+	new_node_ptr->str = strdup(str);
+
+	if (!(new_node_ptr->str))
+	{
+		free(new_node_ptr);
 		return (NULL);
 	}
 
-	new->str = strdup(str);
-	new->len = strlen(str);
-	new->next = NULL;
+	new_node_ptr->len = _strLen(new_node_ptr->str);
+	new_node_ptr->next = NULL;
 
-	temp = *head;
-	if (*head == NULL)
-	{
-		*head = new;
-	}
-
-	else
-	{
-		while (temp->next)
-		{
-			temp = temp->next;
-		}
-		temp->next = new;
-	}
-	return (new);
-}
+	return (new_node_ptr);
