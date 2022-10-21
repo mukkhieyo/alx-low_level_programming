@@ -66,3 +66,4 @@ list_t *createNewNode(const char *str)
 	new_node_ptr->next = NULL;
 
 	return (new_node_ptr);
+}	
