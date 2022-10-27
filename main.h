@@ -1,12 +1,17 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef HEADER_FILE
+#define HEADER_FILE
 
 #include <stdio.h>
+#include <string.h>
 
-void positive_or_negative(int i);
-int largest_number(int a, int b, int c);
-void print_remaining_days(int month, int day, int year);
-int convert_day(int month, int day);
-void print_times_table(int n);
+unsigned int binary_to_uint(const char *b);
+void print_binary(unsigned long int n);
+int get_bit(unsigned long int n, unsigned int index);
+int set_bit(unsigned long int *n, unsigned int index);
+int clear_bit(unsigned long int *n, unsigned int index);
+unsigned int flip_bits(unsigned long int n, unsigned long int m);
+int _atoi(const char *s);
+int _putchar(char c);
+int get_endianness(void);
 
-#endif /* MAIN_H */
+#endif
